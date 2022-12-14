@@ -5,13 +5,11 @@ main = do
     let sums = []
     handle <- openFile "input.txt" ReadMode
     contents <- hGetContents handle
-    let singlelines = lines contents
-        grps = groupcals [] singlelines []
-        cals = map cast grps
-        sums = map sum cals
-        maxv = foldr max 0 sums
+    let sums = map (sum . cast) $ groupcals [] (lines contents) [] 
         max3v = take 3 (reverse (sort sums))
-    print maxv
+    -- Solve step 1 
+    print $ foldr max 0 sums
+    -- Solve step 2
     print (sum max3v)
     hClose handle
 
